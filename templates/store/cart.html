@@ -23,13 +23,14 @@
     </tr>
     </thead>
     <tbody>
+     {% for cart_item in cart_items %}   
     <tr>
         <td>
             <figure class="itemside align-items-center">
-                <div class="aside"><img src="{% static './images/items/img-1.png' %}" class="img-sm"></div>
+                <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
                 <figcaption class="info">
-                    <a href="#" class="title text-dark">GOLD</a>
-                    <p class="text-muted small">Model: Yellow Gold  <br> Brand: Amaan</p>
+                    <a href="#" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                    <p class="text-muted small">Model: {{cart_item.product.category}}  <br> Brand: Amaan</p>
                 </figcaption>
             </figure>
         </td>
@@ -38,25 +39,26 @@
                         <div class="col"> 
                             <div class="input-group input-spinner">
                                 <div class="input-group-prepend">
-                                <button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+                                <a href="{% url 'remove_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
                                 </div>
-                                <input type="text" class="form-control"  value="1">
+                                <input type="text" class="form-control"  value="{{cart_item.quantity}}">
                                 <div class="input-group-append">
-                                <button class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+                                <a href="{% url 'add_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i></a>
                                 </div>
                             </div> <!-- input-group.// -->
                         </div> <!-- col.// -->
         </td>
         <td> 
             <div class="price-wrap"> 
-                <var class="price">$1156.00</var> 
-                <small class="text-muted"> $315.20 each </small> 
+                <var class="price"><b>AED {{ cart_item.sub_total }}</b> </var> 
+                <small class="text-muted">AED {{cart_item.product.price}}</small> 
             </div> <!-- price-wrap .// -->
         </td>
         <td class="text-right"> 
-        <a href="" class="btn btn-danger"> Remove</a>
+        <a href="{% url 'remove_cart_item' cart_item.product.id %}" class="btn btn-danger"> Remove</a>
         </td>
     </tr>
+    {% endfor %}
     </tbody>
     </table>
     </div> <!-- card.// -->
@@ -68,15 +70,15 @@
             <div class="card-body">
                 <dl class="dlist-align">
                   <dt>Total price:</dt>
-                  <dd class="text-right">$69.97</dd>
+                  <dd class="text-right">AED {{total}}</dd>
                 </dl>
                 <dl class="dlist-align">
                   <dt>Tax:</dt>
-                  <dd class="text-right"> $10.00</dd>
+                  <dd class="text-right">AED {{tax}}</dd>
                 </dl>
                 <dl class="dlist-align">
-                  <dt>Total:</dt>
-                  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+                  <dt>Grand Total:</dt>
+                  <dd class="text-right text-dark b"><strong>AED {{grand_total}}</strong></dd>
                 </dl>
                 <hr>
                 <p class="text-center mb-3">
