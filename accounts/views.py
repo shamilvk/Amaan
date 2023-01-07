@@ -4,6 +4,16 @@ from .models import Accounts
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 
+#Verification email
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+
+
 
 def register(request):
     if request.method == 'POST':
@@ -18,7 +28,21 @@ def register(request):
             user = Accounts.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
             user.phone_number = phone_number
             user.save()  
-            messages.success(request , 'Registration successful.')
+            
+            # USER ACTIVATION
+            currrent_site = get_current_site(request)
+            mail_subject = 'Please activate your account'
+            message = render_to_string('accounts/account_verification_email.html')
+            messages.success(request , 'Registration successful.',{
+                'user' : user,
+                'domain' : currrent_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token' : default_token_generator.make_token(user),
+            })
+            to_email = email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email.send()
+            messages.success(request, 'Registration successful.')
             return redirect('register')
     else:                     
         form = RegistrationForm()
