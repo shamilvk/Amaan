@@ -91,7 +91,7 @@
                         <div class="widget-header ">
                             <small class="title text-muted">Welcome {{user.first_name}} 🎉</small>
                             <div> 
-                                <a class="text-dark" href="#">Dashboard</a> <span class="dark-transp"> | </span>
+                                <a class="text-dark" href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
                                 <a class="text-dark" href="{% url 'logout' %}"> Logout</a>
                         {% endif %}
                         <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
