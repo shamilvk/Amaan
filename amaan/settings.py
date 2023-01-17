@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
+    'paypal.standard.ipn',  
 ]
 
 MIDDLEWARE = [
@@ -154,6 +155,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'muhammadshamil500@gmail.com'
 EMAIL_HOST_PASSWORD = 'seenjyozzunppale'
+
+
+# Paypal
+PAYPAL_RECEIVER_EMAIL = 'AmaanBusiness@gmail.com'
+PAYPAL_TEST = True
 
 
 
