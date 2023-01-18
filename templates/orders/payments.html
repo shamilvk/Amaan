@@ -140,16 +140,18 @@
           },
       
           onApprove: function(data, actions) {
-            return actions.order.capture().then(function(orderData) {
+            return actions.order.capture().then(function(details) {
               
               // Full available details
-              console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+              console.log('Capture result', details, JSON.stringify(details, null, 2));
       
               // Show a success message within this page, e.g.
               const element = document.getElementById('paypal-button-container');
               console.log(details)
               element.innerHTML = '';
               element.innerHTML = '<h3>Thank you for your payment!</h3>';
+              //alert('Transaction completed successfully.'+ details.payer.name.given_name +'!');
+
       
               // Or go to another URL:  actions.redirect('thank_you.html');
               
