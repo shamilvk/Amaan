@@ -6,6 +6,9 @@ import datetime
 from .models import Order, Payment, OrderProduct
 import json
 from store.models import Product
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
 
 
 def payments(request):
@@ -56,6 +59,18 @@ def payments(request):
 
 
     #Send order recieved email to customer
+    template = render_to_string('orders/order_received_email.html',{
+        'user' : request.user,
+        'order' : order,
+    })
+    email = EmailMessage(
+        'Thanks for your order!',
+        template,
+        settings.EMAIL_HOST_USER,
+        ['sanavk769@gmail.com'],
+    )
+    email.fail_silently  = False
+    email.send()
     
     
     #Send order number and transaction id back to sendData method via jasonResponse
