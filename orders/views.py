@@ -5,6 +5,7 @@ from .forms import OrderForm
 import datetime
 from .models import Order, Payment, OrderProduct
 import json
+from store.models import Product
 
 
 def payments(request):
@@ -44,11 +45,15 @@ def payments(request):
         orderproduct.variations.set(product_variation)
         orderproduct.save()
 
-        
-    
-    #Reduce the quantity of the sold products
+        #Reduce the quantity of the sold products
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+
     
     # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
+
 
     #Send order recieved email to customer
     
