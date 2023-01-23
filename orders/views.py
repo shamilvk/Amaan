@@ -59,16 +59,18 @@ def payments(request):
 
 
     #Send order recieved email to customer
-    template = render_to_string('orders/order_received_email.html',{
-        'user' : request.user,
+    template = render_to_string('orders/order_recieved_email.html',{
+        'user'  :request.user,
         'order' : order,
     })
     email = EmailMessage(
-        'Thanks for your order!',
+        'Thank you for your order!',
+        # 'YOUR ORDER HAS BEEN RECEIVED',
         template,
         settings.EMAIL_HOST_USER,
-        ['sanavk769@gmail.com'],
+        [request.user.email]
     )
+    request.user.email 
     email.fail_silently  = False
     email.send()
     
