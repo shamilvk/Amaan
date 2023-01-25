@@ -43,9 +43,14 @@ def product_detail(request, category_slug, product_slug):
     except Exception as e:
         raise e
     
+    # Get the reviews for the products
+    reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
+    
     context = {
         'single_product' : single_product,
         'in_cart'        : in_cart,
+        'reviews'        : reviews,
+
     }
     return render(request, 'store/product_detail.html', context)
 
