@@ -15,7 +15,7 @@
             </header>
             <div class="card-body">
               <div class="text-right">
-                <img src="{{userprofile.profile_picture.url}}" alt="Profile Picture" width="100" style="border-radius: 50px;">
+                <img src="{{userprofile.profile_picture.url}}" alt="Profile Picture"  style="width:100px; border: 2px solid black;">
               </div>
                 <div class="row"> 
                     <div class="col-md-12">
@@ -77,4 +77,11 @@
     
     </section>
 
+    <style>
+      img {
+        border-radius: 20px;
+      }
+    </style>
+
 {% endblock %}
+
