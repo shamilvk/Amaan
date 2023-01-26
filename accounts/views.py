@@ -224,3 +224,12 @@ def resetPassword(request):
             return redirect('resetPassword')
     else:
         return render(request, 'accounts/resetPassword.html')
+    
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user, is_ordered=True)
+    context = {
+        'orders' : orders,
+    }
+    
+    return render(request, 'accounts/my_orders.html',context)
