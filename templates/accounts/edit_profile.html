@@ -15,7 +15,7 @@
             </header>
             <div class="card-body">
               <div class="text-right">
-                <img src="{{userprofile.profile_picture.url}}" alt="Profile Picture"  style="width:100px; border: 2px solid black;">
+                <img src="{% if userprofile.profile_picture %}{{userprofile.profile_picture.url}}{% endif %}" alt="Profile Picture"  style="width:100px; border: 2px solid black;">
               </div>
                 <div class="row"> 
                     <div class="col-md-12">
